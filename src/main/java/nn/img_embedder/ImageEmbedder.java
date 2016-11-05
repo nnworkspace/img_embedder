@@ -59,8 +59,10 @@ public class ImageEmbedder {
 					url = url.insert(4, 's');
 				}
 
-				sb.append(url.insert(url.length() - 4, 'l'));				
-				sb.append(")](").append(url.deleteCharAt(url.length() - 5));
+				int suffixBegin = url.lastIndexOf(".");
+
+				sb.append(url.insert(suffixBegin, 'l'));
+				sb.append(")](").append(url.deleteCharAt(url.lastIndexOf("l")));
 				sb.append(")\n\n\n");
 
 				System.out.println(sb.toString());
@@ -85,14 +87,17 @@ public class ImageEmbedder {
 			stream.forEach((imgUrl) -> {
 				StringBuilder url = new StringBuilder(imgUrl);
 				StringBuilder sb = new StringBuilder("<a href=\"");
-				
+
 				if ('s' != imgUrl.charAt(4)) {
 					// not https, need to insert an s
 					url = url.insert(4, 's');
 				}
 				
 				sb.append(url).append("\"> <img src=\"");
-				sb.append(url.insert(url.length() - 4, 'l'));
+				
+				int suffixBegin = url.lastIndexOf(".");
+
+				sb.append(url.insert(suffixBegin, 'l'));
 				sb.append("\" alt=\"\" title=\"\" >");
 				sb.append(" </a> <br />\n<br />\n<br />");
 
